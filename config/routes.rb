@@ -13,7 +13,18 @@ Rails.application.routes.draw do
 
 
   # ---------- Pair C: Attendee -> Ticket (and Festival -> Ticket) ----------
-
+  # List one attendee's tickets: GET /attendees/:attendee_id/tickets
+  # Parent id param: :attendee_id (and :festival_id on the festival route)
+  # Nested twice because a ticket belongs to both an attendee and a festival:
+  #   /attendees/:attendee_id/tickets -> one attendee's purchase history
+  #   /festivals/:festival_id/tickets -> one festival's ticket sales
+  # only: [] adds the nested route without redefining Pair A's festival routes
+  resources :attendees do
+    resources :tickets
+  end
+  resources :festivals, only: [] do
+    resources :tickets, only: [:index]
+  end
 
 
   # ---------- Integrator: Stage / Artist -> Performance ----------
