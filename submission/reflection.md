@@ -8,7 +8,7 @@ Members:
 Tracks have artist_id because each track belongs to one artist, while an artist can have many tracks. We used dependent: :destroy so deleting an artist also deletes its tracks.
 
 **b. What happens to a Festival's Stages when the Festival is destroyed? Where in your code did you specify that behavior?**
-
+When a Festival is destroyed, all its associated Stages are also deleted if dependent: :destroy is used. This behavior is specified in the Festival model (app/models/festival.rb) through has_many :stages, dependent: :destroy.
 
 
 **c. Why does `Performance` need to be its own model with its own table, rather than a bare join table with no model?**
