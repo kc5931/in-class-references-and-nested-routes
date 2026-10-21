@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
 
   # ---------- Pair A: Festival -> Stage ----------
-
+  resources :festivals do
+    resources :stages
+  end
 
 
   # ---------- Pair B: Artist -> Track (use shallow nesting) ----------
