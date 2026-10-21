@@ -1,0 +1,38 @@
+Pair B: Artist / Track verification
+Ruby 3.3.8; Rails 7.1.6; SQLite 3.45.2
+
+artist = Artist.create!(name: "Festival Trio", genre: "Jazz")
+artist.tracks.create!(title: "Sunset", length_sec: 240)
+artist.tracks.create!(title: "Encore", length_sec: 180)
+artist.tracks.count => 2
+Track.find(1).artist == artist => true
+
+PASS: Artist has its two persisted Tracks
+PASS: Track belongs to its persisted Artist
+PASS: An Artist's collection excludes other Artists' Tracks
+PASS: Artist requires a name
+PASS: Artist requires a genre
+PASS: Track requires a title
+PASS: Track requires an Artist
+PASS: Track rejects a nonexistent Artist
+PASS: Track rejects length_sec=nil
+PASS: Track rejects length_sec=0
+PASS: Track rejects length_sec=-1
+PASS: Track rejects length_sec=1.5
+PASS: Track rejects length_sec="invalid"
+PASS: tracks.artist_id has a database foreign key to artists
+PASS: Artist key updates cascade in the database
+PASS: Direct deletion of a referenced Artist is restricted
+PASS: tracks.artist_id cannot be NULL
+PASS: tracks.artist_id is indexed
+PASS: Database rejects an orphan even when validations are bypassed
+PASS: Database rejects a NULL Artist even when validations are bypassed
+PASS: Direct Artist deletion cannot leave orphan Tracks
+PASS: Destroying an Artist destroys its Tracks
+PASS: Destroying an Artist preserves other Artists and Tracks
+PASS: Artist track collection helper uses artist_id
+PASS: Individual Track helper uses only the Track ID
+PASS: All six API Track routes have the required verbs, actions, and shallow paths
+PASS: No Track member route includes an Artist ID
+
+All Pair B checks passed. Verification data was rolled back.

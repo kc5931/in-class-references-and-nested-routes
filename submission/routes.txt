@@ -1,0 +1,7 @@
+       Prefix Verb   URI Pattern                          Controller#Action
+artist_tracks GET    /artists/:artist_id/tracks(.:format) tracks#index
+              POST   /artists/:artist_id/tracks(.:format) tracks#create
+        track GET    /tracks/:id(.:format)                tracks#show
+              PATCH  /tracks/:id(.:format)                tracks#update
+              PUT    /tracks/:id(.:format)                tracks#update
+              DELETE /tracks/:id(.:format)                tracks#destroy
