@@ -1,38 +1,62 @@
-Pair B: Artist / Track verification
+Activity #6: integrated festival app verification
 Ruby 3.3.8; Rails 7.1.6; SQLite 3.45.2
 
-artist = Artist.create!(name: "Festival Trio", genre: "Jazz")
-artist.tracks.create!(title: "Sunset", length_sec: 240)
-artist.tracks.create!(title: "Encore", length_sec: 180)
-artist.tracks.count => 2
-Track.find(1).artist == artist => true
+PASS: All seven application tables exist
+PASS: All six database foreign keys exist
+PASS: SQLite reports no foreign key violations
+PASS: Seeds run twice without adding duplicate records
+PASS: Seeds populate all seven models
 
-PASS: Artist has its two persisted Tracks
-PASS: Track belongs to its persisted Artist
-PASS: An Artist's collection excludes other Artists' Tracks
-PASS: Artist requires a name
-PASS: Artist requires a genre
-PASS: Track requires a title
-PASS: Track requires an Artist
-PASS: Track rejects a nonexistent Artist
-PASS: Track rejects length_sec=nil
-PASS: Track rejects length_sec=0
-PASS: Track rejects length_sec=-1
-PASS: Track rejects length_sec=1.5
-PASS: Track rejects length_sec="invalid"
-PASS: tracks.artist_id has a database foreign key to artists
-PASS: Artist key updates cascade in the database
-PASS: Direct deletion of a referenced Artist is restricted
-PASS: tracks.artist_id cannot be NULL
-PASS: tracks.artist_id is indexed
-PASS: Database rejects an orphan even when validations are bypassed
-PASS: Database rejects a NULL Artist even when validations are bypassed
-PASS: Direct Artist deletion cannot leave orphan Tracks
-PASS: Destroying an Artist destroys its Tracks
-PASS: Destroying an Artist preserves other Artists and Tracks
-PASS: Artist track collection helper uses artist_id
-PASS: Individual Track helper uses only the Track ID
-PASS: All six API Track routes have the required verbs, actions, and shallow paths
-PASS: No Track member route includes an Artist ID
+Console examples using persisted seed records:
+Festival.first.stages.count => 1
+Stage.first.festival.name => "Sunset Fest"
+Artist.first.tracks.count => 1
+Track.first.artist.name => "Festival Trio"
+Attendee.first.tickets.count => 1
+Ticket.first.festival.name => "Sunset Fest"
+Stage.first.artists.pluck(:name) => ["Festival Trio"]
+Artist.first.stages.pluck(:name) => ["Main Stage"]
 
-All Pair B checks passed. Verification data was rolled back.
+PASS: A Festival has its Stages
+PASS: A Stage belongs to its Festival
+PASS: An Artist has its Tracks
+PASS: A Track belongs to its Artist
+PASS: An Attendee has its Tickets
+PASS: A Festival has its Tickets
+PASS: A Ticket belongs to both parents
+PASS: A Performance stores its start time and both parents
+PASS: A Stage has multiple Artists through Performances
+PASS: An Artist has multiple Stages through Performances
+PASS: Festival rejects missing required fields
+PASS: Stage rejects missing required fields
+PASS: Artist rejects missing required fields
+PASS: Track rejects missing required fields
+PASS: Attendee rejects missing required fields
+PASS: Ticket rejects missing required fields
+PASS: Performance rejects missing required fields
+PASS: Stage rejects nonpositive capacity
+PASS: Track rejects nonpositive length
+PASS: Ticket rejects a negative price
+PASS: Performance requires starts_at
+PASS: Performance requires a Stage
+PASS: Performance requires an Artist
+PASS: Database rejects an orphan Performance
+PASS: Database rejects a Performance without a start time
+PASS: Attendee deletion is blocked when Tickets exist
+PASS: Festival deletion is blocked when Tickets exist
+PASS: Blocked Festival deletion preserves Stages and Performances
+PASS: Artist deletion destroys its Tracks
+PASS: Artist deletion destroys its Performances
+PASS: Artist deletion preserves Stages and other Artists
+PASS: Festival deletion without Tickets destroys its Stages
+PASS: Stage deletion destroys its Performances
+PASS: Festival deletion preserves Artists and Attendees
+PASS: Stages are listed under a Festival
+PASS: Tracks are listed under an Artist
+PASS: Track member paths are shallow
+PASS: Tickets are listed under an Attendee
+PASS: Tickets are listed under a Festival
+PASS: Performances are listed under a Stage
+PASS: Performances are listed under an Artist
+
+All integrated checks passed. Verification-only records were rolled back.

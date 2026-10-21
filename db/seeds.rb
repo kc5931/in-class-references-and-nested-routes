@@ -1,6 +1,7 @@
-# Deliverable #4: show one parent with children, including a Performance
-# that links an Artist to a Stage. Run with:  bin/rails db:seed
-#
-# Tip: make it safe to run twice (find_or_create_by!) or start with
-# destroy_all calls in the right order.
-
+festival = Festival.find_or_create_by!(name: "Sunset Fest", starts_on: Date.new(2026, 10, 21), city: "Austin")
+stage = festival.stages.find_or_create_by!(name: "Main Stage", capacity: 5000)
+artist = Artist.find_or_create_by!(name: "Festival Trio", genre: "Jazz")
+artist.tracks.find_or_create_by!(title: "Sunset", length_sec: 240)
+attendee = Attendee.find_or_create_by!(name: "Sample Attendee", email: "attendee@example.com")
+attendee.tickets.find_or_create_by!(festival: festival, tier: "General", price_cents: 5000)
+Performance.find_or_create_by!(stage: stage, artist: artist, starts_at: Time.zone.local(2026, 10, 21, 18, 0))
