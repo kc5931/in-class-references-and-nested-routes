@@ -1,0 +1,19 @@
+# ===== app/models/application_record.rb =====
+class ApplicationRecord < ActiveRecord::Base
+  primary_abstract_class
+end
+
+# ===== app/models/artist.rb =====
+class Artist < ApplicationRecord
+  has_many :tracks, dependent: :destroy
+
+  validates :name, :genre, presence: true
+end
+
+# ===== app/models/track.rb =====
+class Track < ApplicationRecord
+  belongs_to :artist
+
+  validates :title, presence: true
+  validates :length_sec, numericality: { only_integer: true, greater_than: 0 }
+end
